@@ -1,10 +1,10 @@
 function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
+	var x = document.getElementById("myTopnav");
+	if (x.className === "topnav") {
+		x.className += " responsive";
+	} else {
+		x.className = "topnav";
+	}
 }
 
 // DOM Elements
@@ -12,13 +12,15 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelectorAll(".close");
-const modalForm = document.querySelectorAll("#form");
-const firstName = document.querySelectorAll("#first");
-const lastName = document.querySelectorAll("#last");
-const email = document.querySelectorAll("#email");
-const birthdate = document.querySelectorAll("#birthdate");
-const quantityTournament = document.querySelectorAll("#quantity");
+const modalForm = document.getElementById("form");
+const firstName = document.getElementById("first");
+const lastName = document.getElementById("last");
+const email = document.getElementById("email");
+const birthdate = document.getElementById("birthdate");
+const quantityTournament = document.getElementById("quantity");
 const submitBtn = document.querySelectorAll(".btn-submit");
+const location = document.querySelectorAll(".checkbox-input[name=location]");
+const checkboxCondition = document.getElementById("checkbox1");
 
 /* AIDE pourquoi selectorAll et pas document.getElementsByClassName ou document.getElementById */
 /* AIDE mieux de séléctionner par id ou par class */
@@ -32,58 +34,97 @@ closeBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 
 // launch modal form
 function launchModal() {
-  modalbg.style.display = "block";
+	modalbg.style.display = "block";
 }
 
 // close modal form
 function closeModal() {
-  modalbg.style.display = "none";
+	modalbg.style.display = "none";
 }
 /* AIDE: removeEventListener nécessaire ?*/
 
 // submit modal event
-submitBtn.forEach((e)=> e.addEventListener("click", validate));
+submitBtn.forEach((e) => e.addEventListener("click", validate));
 /* AIDE pas utile car mis dans HTML mais est-ce une bonne pratique (compatibilité avec nav ?)*/
 
 // submit modal form
 
-function validate(e){
+const firstNameValidate = () => {
+	if (firstName.value.length < 2 || firstName.value == null || !/^[A-Za-z]+$/.test(firstName.value)) {
+		console.log("nope");
+	} else {
+		return true;
+	}
+};
 
-e.preventDefault();
+const lastNameValidate = () => {
+	if (lastName.value.length < 2 || lastName.value == null || !/^[A-Za-z]+$/.test(firstName.value)) {
+		console.log("nope");
+	} else {
+		return true;
+	}
+};
 
-  if (firstName === '' || firstName == null) {
-    console.log("c'est pas bon");
-  } else {
-    console.log ("ok");
-  };
+const emailValidate = () => {
+	if (email.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email.value)) {
+		console.log("nope");
+	} else {
+		return true;
+	}
+};
 
-  if (lastName == "" || lastName == null) {
-    console.log("c'est pas bon");
-  } else {
-    console.log ("ok");
-  };
+const birthdateValidate = () => {
+	if (birthdate.value == null || !/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdate.value)) {
+		console.log("nope");
+	} else {
+		return true;
+	}
+};
+/*AIDE si temps de le faire, mettre une condition supp que la date < today*/
 
-  if (email==1) {
-    console.log("c'est pas bon");
-  } else {
-    console.log ("ok");
-    let regex = Regex(/^[a-zA-Z \-àâçéèêëîïôûùüÿñæœ']{2,}$/, 'g');
-    return regex.test(String(email).toLowerCase());
-  };
+const quantityValidate = () => {
+	if (quantityTournament.value == null || !/^[0-9]+$/.test(quantityTournament.value)) {
+		console.log("nope");
+	} else {
+		return true;
+	}
+};
 
-  if (birthdate ==1) {
-    console.log("c'est pas bon");
-  } else {
-    console.log ("ok");
-  };
+const locationValidate = () => {
+	for (let radio of location) {
+		if (radio.checked === true) {
+			return true;
+		} else {
+			console.log("nope");
+		}
+	}
+};
 
-  if (isNaN(quantityTournament) || quantityTournament == null) {
-    console.log("c'est pas bon");
-  } else {
-    console.log ("ok");
-  };
+const checkboxValidate = () => {
+	if (checkboxCondition.checked == null) {
+		return true;
+	} else {
+		console.log("nope");
+	}
+};
+
+function validate(e) {
+	if (
+		firstNameValidate() &&
+		lastNameValidate() &&
+		emailValidate() &&
+		birthdateValidate() &&
+		quantityValidate() &&
+		locationValidate() &&
+		checkboxValidate()
+	) {
+		console.log("tout est bon");
+	} else {
+		console.log("form pas ok");
+	}
 }
-/* AIDE fonction validate dans le HTML + method="post" ne marche pas */
+
+/* AIDE method="post" ne marche pas */
 
 /* setErrorFor (input, message){
 const formControl = input.parentElement;
