@@ -11,19 +11,18 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const closeBtn = document.querySelectorAll(".close");
 // DOM Elements - Form
-const modalForm = document.getElementById("form");
+const closeBtn = document.querySelectorAll(".close");
 const submitBtn = document.querySelectorAll(".btn-submit");
+const modalBody = document.querySelector(".modal-body");
+const modalForm = document.getElementById("form");
 const firstNameForm = document.getElementById("first");
 const lastNameForm = document.getElementById("last");
 const emailForm = document.getElementById("email");
 const birthdateForm = document.getElementById("birthdate");
 const quantityTournamentForm = document.getElementById("quantity");
-const radioLocationsNumber = document.querySelectorAll("input[name=location]:checked").length;
 const radioLocationsForm = document.querySelector("input[name=location]");
 const checkboxConditionForm = document.getElementById("checkbox1");
-
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -45,7 +44,6 @@ function closeModal() {
 submitBtn.forEach((e) => e.addEventListener("click", validate));
 
 // submit modal form
-
 
 const firstNameValidate = () => {
 	if (firstNameForm.value.length < 2 || firstNameForm.value == null || !/^[A-Za-z]+$/.test(firstNameForm.value)) {
@@ -81,7 +79,10 @@ const emailValidate = () => {
 };
 
 const birthdateValidate = () => {
-	if (birthdateForm.value == null || !/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdateForm.value)) {
+	if (
+		birthdateForm.value == null ||
+		!/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdateForm.value)
+	) {
 		birthdateForm.parentElement.setAttribute("data-error-visible", "true");
 		birthdateForm.parentElement.setAttribute("data-error", errorMessages.birthdate);
 	} else {
@@ -103,16 +104,15 @@ const quantityValidate = () => {
 };
 
 const locationValidate = () => {
-		if (radioLocationsNumber > 0) {
+	if (document.querySelectorAll("input[name=location]:checked").length > 0) {
 		radioLocationsForm.parentElement.removeAttribute("data-error-visible");
 		radioLocationsForm.parentElement.removeAttribute("data-error");
-			return true;
-		} else {
-			radioLocationsForm.parentElement.setAttribute("data-error-visible", "true");
-			radioLocationsForm.parentElement.setAttribute("data-error", errorMessages.location);
-		};
+		return true;
+	} else {
+		radioLocationsForm.parentElement.setAttribute("data-error-visible", "true");
+		radioLocationsForm.parentElement.setAttribute("data-error", errorMessages.location);
+	}
 };
-
 
 const checkboxValidate = () => {
 	if (checkboxConditionForm.checked == true) {
@@ -144,7 +144,9 @@ function validate(e) {
 		locationValidate() &&
 		checkboxValidate()
 	) {
-		console.log("tout est bon");
+		showSuccessMessage();
+		hideFormData();
+		modifySubmitButton();
 	} else {
 		console.log("form pas ok");
 	}
@@ -173,3 +175,23 @@ const errorMessages = {
 
 	}
 	*/
+
+// Success message
+
+const showSuccessMessage = () => {
+	const successMessage = document.createElement("span");
+	successMessage.id = "success";
+	successMessage.appendChild(document.createTextNode("Merci ! Votre réservation a été reçue."));
+	modalBody.appendChild(successMessage);
+	successMessage.style.position = "absolute";
+	successMessage.style.top = "50%";
+};
+
+const hideFormData = () => {
+	formData.forEach((data) => (data.style.visibility = "hidden"));
+};
+
+const modifySubmitButton = () => {
+	submitBtn.forEach((btn) => btn.setAttribute("value","Fermer"));
+	submitBtn.forEach((btn) => btn.addEventListener("click", closeModal));
+};
