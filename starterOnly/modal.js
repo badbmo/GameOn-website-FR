@@ -12,15 +12,17 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelectorAll(".close");
+// DOM Elements - Form
 const modalForm = document.getElementById("form");
-const firstName = document.getElementById("first");
-const lastName = document.getElementById("last");
-const email = document.getElementById("email");
-const birthdate = document.getElementById("birthdate");
-const quantityTournament = document.getElementById("quantity");
 const submitBtn = document.querySelectorAll(".btn-submit");
-const radioLocations = document.querySelectorAll("input[name=location]:checked").length;
-const checkboxCondition = document.getElementById("checkbox1");
+const firstNameForm = document.getElementById("first");
+const lastNameForm = document.getElementById("last");
+const emailForm = document.getElementById("email");
+const birthdateForm = document.getElementById("birthdate");
+const quantityTournamentForm = document.getElementById("quantity");
+const radioLocationsNumber = document.querySelectorAll("input[name=location]:checked").length;
+const radioLocationsForm = document.querySelector("input[name=location]");
+const checkboxConditionForm = document.getElementById("checkbox1");
 
 
 // launch modal event
@@ -46,64 +48,93 @@ submitBtn.forEach((e) => e.addEventListener("click", validate));
 
 
 const firstNameValidate = () => {
-	if (firstName.value.length < 2 || firstName.value == null || !/^[A-Za-z]+$/.test(firstName.value)) {
-		console.log("nope");
+	if (firstNameForm.value.length < 2 || firstNameForm.value == null || !/^[A-Za-z]+$/.test(firstNameForm.value)) {
+		firstNameForm.parentElement.setAttribute("data-error-visible", "true");
+		firstNameForm.parentElement.setAttribute("data-error", errorMessages.firstName);
 	} else {
+		firstNameForm.parentElement.removeAttribute("data-error-visible");
+		firstNameForm.parentElement.removeAttribute("data-error");
 		return true;
 	}
 };
 
 const lastNameValidate = () => {
-	if (lastName.value.length < 2 || lastName.value == null || !/^[A-Za-z]+$/.test(firstName.value)) {
-		console.log("nope");
+	if (lastNameForm.value.length < 2 || lastNameForm.value == null || !/^[A-Za-z]+$/.test(lastNameForm.value)) {
+		lastNameForm.parentElement.setAttribute("data-error-visible", "true");
+		lastNameForm.parentElement.setAttribute("data-error", errorMessages.lastName);
 	} else {
+		lastNameForm.parentElement.removeAttribute("data-error-visible");
+		lastNameForm.parentElement.removeAttribute("data-error");
 		return true;
 	}
 };
 
 const emailValidate = () => {
-	if (email.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email.value)) {
-		console.log("nope");
+	if (emailForm.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(emailForm.value)) {
+		emailForm.parentElement.setAttribute("data-error-visible", "true");
+		emailForm.parentElement.setAttribute("data-error", errorMessages.email);
 	} else {
+		emailForm.parentElement.removeAttribute("data-error-visible");
+		emailForm.parentElement.removeAttribute("data-error");
 		return true;
 	}
 };
 
 const birthdateValidate = () => {
-	if (birthdate.value == null || !/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdate.value)) {
-		console.log("nope");
+	if (birthdateForm.value == null || !/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdateForm.value)) {
+		birthdateForm.parentElement.setAttribute("data-error-visible", "true");
+		birthdateForm.parentElement.setAttribute("data-error", errorMessages.birthdate);
 	} else {
+		birthdateForm.parentElement.removeAttribute("data-error-visible");
+		birthdateForm.parentElement.removeAttribute("data-error");
 		return true;
 	}
 };
 
 const quantityValidate = () => {
-	if (quantityTournament.value == null || !/^[0-9]+$/.test(quantityTournament.value)) {
-		console.log("nope");
+	if (quantityTournamentForm.value == null || !/^[0-9]+$/.test(quantityTournamentForm.value)) {
+		quantityTournamentForm.parentElement.setAttribute("data-error-visible", "true");
+		quantityTournamentForm.parentElement.setAttribute("data-error", errorMessages.quantity);
 	} else {
+		quantityTournamentForm.parentElement.removeAttribute("data-error-visible");
+		quantityTournamentForm.parentElement.removeAttribute("data-error");
 		return true;
 	}
 };
 
 const locationValidate = () => {
-		if (radioLocations > 0) {
+		if (radioLocationsNumber > 0) {
+		radioLocationsForm.parentElement.removeAttribute("data-error-visible");
+		radioLocationsForm.parentElement.removeAttribute("data-error");
 			return true;
 		} else {
-			console.log("c'est pas bon");
+			radioLocationsForm.parentElement.setAttribute("data-error-visible", "true");
+			radioLocationsForm.parentElement.setAttribute("data-error", errorMessages.location);
 		};
 };
 
 
 const checkboxValidate = () => {
-	if (checkboxCondition.checked == true) {
+	if (checkboxConditionForm.checked == true) {
+		checkboxConditionForm.parentElement.removeAttribute("data-error-visible");
+		checkboxConditionForm.parentElement.removeAttribute("data-error");
 		return true;
 	} else {
-		console.log("cgu nope");
+		checkboxConditionForm.parentElement.setAttribute("data-error-visible", "true");
+		checkboxConditionForm.parentElement.setAttribute("data-error", errorMessages.checkbox);
+		return false;
 	}
 };
 
 function validate(e) {
 	e.preventDefault();
+	firstNameValidate();
+	lastNameValidate();
+	emailValidate();
+	birthdateValidate();
+	quantityValidate();
+	locationValidate();
+	checkboxValidate();
 	if (
 		firstNameValidate() &&
 		lastNameValidate() &&
@@ -119,9 +150,26 @@ function validate(e) {
 	}
 }
 
-/* setErrorFor (input, message){
-const formControl = input.parentElement;
-const small = formControl.querySelector ('small');
-formControl.className ="form-control error";
-small.innerText = message;
-}*/
+// Error message
+
+const errorMessages = {
+	firstName: "Veuillez entrer 2 caractères ou plus.",
+	lastName: "Veuillez entrer 2 caractères ou plus.",
+	email: "Veuillez entrer une adresse email valide.",
+	birthdate: "Veuillez entrer une date de naissance valide.",
+	quantity: "Veuillez entrer un nombre.",
+	location: "Veuillez sélectionner une option.",
+	checkbox: "Veuillez vérifier que vous acceptez les termes et conditions.",
+};
+/*
+	const showError = (selectedInput, errorMessage) => {
+		selectedInput.parentElement.setAttribute("data-error-visible", "true");
+		selectedInput.setAttribute("data-error", errorMessage);
+	}
+
+	const hideError = (selectedInput) => {
+		selectedInput.removeAttribute("data-error-visible");
+		selectedInput.removeAttribute("data-error");
+
+	}
+	*/
