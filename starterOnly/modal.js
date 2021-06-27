@@ -47,33 +47,27 @@ submitBtn.forEach((e) => e.addEventListener("click", validate));
 
 const firstNameValidate = () => {
 	if (firstNameForm.value.length < 2 || firstNameForm.value == null || !/^[A-Za-z]+$/.test(firstNameForm.value)) {
-		firstNameForm.parentElement.setAttribute("data-error-visible", "true");
-		firstNameForm.parentElement.setAttribute("data-error", errorMessages.firstName);
+		showError(firstNameForm, errorMessages.firstName);
 	} else {
-		firstNameForm.parentElement.removeAttribute("data-error-visible");
-		firstNameForm.parentElement.removeAttribute("data-error");
+		hideError(firstNameForm);
 		return true;
 	}
 };
 
 const lastNameValidate = () => {
 	if (lastNameForm.value.length < 2 || lastNameForm.value == null || !/^[A-Za-z]+$/.test(lastNameForm.value)) {
-		lastNameForm.parentElement.setAttribute("data-error-visible", "true");
-		lastNameForm.parentElement.setAttribute("data-error", errorMessages.lastName);
+		showError(lastNameForm, errorMessages.lastName);
 	} else {
-		lastNameForm.parentElement.removeAttribute("data-error-visible");
-		lastNameForm.parentElement.removeAttribute("data-error");
+		hideError(lastNameForm);
 		return true;
 	}
 };
 
 const emailValidate = () => {
 	if (emailForm.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(emailForm.value)) {
-		emailForm.parentElement.setAttribute("data-error-visible", "true");
-		emailForm.parentElement.setAttribute("data-error", errorMessages.email);
+		showError(emailForm, errorMessages.email);
 	} else {
-		emailForm.parentElement.removeAttribute("data-error-visible");
-		emailForm.parentElement.removeAttribute("data-error");
+		hideError(emailForm);
 		return true;
 	}
 };
@@ -83,46 +77,37 @@ const birthdateValidate = () => {
 		birthdateForm.value == null ||
 		!/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdateForm.value)
 	) {
-		birthdateForm.parentElement.setAttribute("data-error-visible", "true");
-		birthdateForm.parentElement.setAttribute("data-error", errorMessages.birthdate);
+		showError(birthdateForm, errorMessages.birthdate);
 	} else {
-		birthdateForm.parentElement.removeAttribute("data-error-visible");
-		birthdateForm.parentElement.removeAttribute("data-error");
+		hideError(birthdateForm);
 		return true;
 	}
 };
 
 const quantityValidate = () => {
 	if (quantityTournamentForm.value == null || !/^[0-9]+$/.test(quantityTournamentForm.value)) {
-		quantityTournamentForm.parentElement.setAttribute("data-error-visible", "true");
-		quantityTournamentForm.parentElement.setAttribute("data-error", errorMessages.quantity);
+		showError(quantityTournamentForm, errorMessages.quantity);
 	} else {
-		quantityTournamentForm.parentElement.removeAttribute("data-error-visible");
-		quantityTournamentForm.parentElement.removeAttribute("data-error");
+		hideError(quantityTournamentForm);
 		return true;
 	}
 };
 
 const locationValidate = () => {
 	if (document.querySelectorAll("input[name=location]:checked").length > 0) {
-		radioLocationsForm.parentElement.removeAttribute("data-error-visible");
-		radioLocationsForm.parentElement.removeAttribute("data-error");
+		hideError(radioLocationsForm);
 		return true;
 	} else {
-		radioLocationsForm.parentElement.setAttribute("data-error-visible", "true");
-		radioLocationsForm.parentElement.setAttribute("data-error", errorMessages.location);
+		showError(radioLocationsForm, errorMessages.location);
 	}
 };
 
 const checkboxValidate = () => {
 	if (checkboxConditionForm.checked == true) {
-		checkboxConditionForm.parentElement.removeAttribute("data-error-visible");
-		checkboxConditionForm.parentElement.removeAttribute("data-error");
+		hideError(checkboxConditionForm);
 		return true;
 	} else {
-		checkboxConditionForm.parentElement.setAttribute("data-error-visible", "true");
-		checkboxConditionForm.parentElement.setAttribute("data-error", errorMessages.checkbox);
-		return false;
+		showError(checkboxConditionForm, errorMessages.checkbox);
 	}
 };
 
@@ -163,18 +148,16 @@ const errorMessages = {
 	location: "Veuillez sélectionner une option.",
 	checkbox: "Veuillez vérifier que vous acceptez les termes et conditions.",
 };
-/*
-	const showError = (selectedInput, errorMessage) => {
-		selectedInput.parentElement.setAttribute("data-error-visible", "true");
-		selectedInput.setAttribute("data-error", errorMessage);
-	}
 
-	const hideError = (selectedInput) => {
-		selectedInput.removeAttribute("data-error-visible");
-		selectedInput.removeAttribute("data-error");
+const showError = (selectedInput, errorMessage) => {
+	selectedInput.parentElement.setAttribute("data-error-visible", "true");
+	selectedInput.parentElement.setAttribute("data-error", errorMessage);
+};
 
-	}
-	*/
+const hideError = (selectedInput) => {
+	selectedInput.parentElement.removeAttribute("data-error-visible");
+	selectedInput.parentElement.removeAttribute("data-error");
+};
 
 // Success message
 
@@ -192,6 +175,6 @@ const hideFormData = () => {
 };
 
 const modifySubmitButton = () => {
-	submitBtn.forEach((btn) => btn.setAttribute("value","Fermer"));
+	submitBtn.forEach((btn) => btn.setAttribute("value", "Fermer"));
 	submitBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 };
