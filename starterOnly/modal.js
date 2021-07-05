@@ -45,25 +45,24 @@ modalForm.addEventListener("submit", validate);
 
 // submit modal form
 
-const firstNameValidate = () => {
-	if (firstNameForm.value.length < 2 || firstNameForm.value == null || !/^[A-Za-z]+$/.test(firstNameForm.value)) {
-		showError(firstNameForm, errorMessages.firstName);
+const NameValidate = (nameForm, errorMessage) => {
+	if (nameForm.value.length < 2 || nameForm.value == null || !/^[A-Za-z]+$/.test(nameForm.value)) {
+		showError(nameForm, errorMessage);
 		return false;
 	} else {
-		hideError(firstNameForm);
+		hideError(nameForm);
 		return true;
 	}
 };
 
-const lastNameValidate = () => {
-	if (lastNameForm.value.length < 2 || lastNameForm.value == null || !/^[A-Za-z]+$/.test(lastNameForm.value)) {
-		showError(lastNameForm, errorMessages.lastName);
-		return false;
-	} else {
-		hideError(lastNameForm);
-		return true;
-	}
+const firstNameValidate = () =>{
+	NameValidate (lastNameForm, errorMessages.lastName);
 };
+
+const lastNameValidate = () =>{
+	NameValidate (firstNameForm, errorMessages.firstName);
+};
+
 
 const emailValidate = () => {
 	if (emailForm.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(emailForm.value)) {
