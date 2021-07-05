@@ -251,7 +251,7 @@ input[data-error]::after {
   position: absolute;
   left: -30px;
   top: -1px;
-  transition: 0.3s;
+  transition: opacity 0.3s;
 }
 .checkbox-label .checkbox-icon::after,
 .checkbox2-label .checkbox-icon::after {
@@ -266,7 +266,7 @@ input[data-error]::after {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  transition: 0.3s;
+  transition: opacity 0.3s;
   opacity: 0;
 }
 .checkbox-input {
