@@ -15,7 +15,7 @@ const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelectorAll(".close");
 const submitBtn = document.querySelectorAll(".btn-submit");
 const modalBody = document.querySelector(".modal-body");
-const modalForm = document.getElementById("form");
+const modalForm = document.querySelector("form[name=reserve]");
 const firstNameForm = document.getElementById("first");
 const lastNameForm = document.getElementById("last");
 const emailForm = document.getElementById("email");
@@ -41,13 +41,14 @@ function closeModal() {
 }
 
 // submit modal event
-submitBtn.forEach((e) => e.addEventListener("click", validate));
+modalForm.addEventListener("submit", validate);
 
 // submit modal form
 
 const firstNameValidate = () => {
 	if (firstNameForm.value.length < 2 || firstNameForm.value == null || !/^[A-Za-z]+$/.test(firstNameForm.value)) {
 		showError(firstNameForm, errorMessages.firstName);
+		return false;
 	} else {
 		hideError(firstNameForm);
 		return true;
@@ -57,6 +58,7 @@ const firstNameValidate = () => {
 const lastNameValidate = () => {
 	if (lastNameForm.value.length < 2 || lastNameForm.value == null || !/^[A-Za-z]+$/.test(lastNameForm.value)) {
 		showError(lastNameForm, errorMessages.lastName);
+		return false;
 	} else {
 		hideError(lastNameForm);
 		return true;
@@ -66,6 +68,7 @@ const lastNameValidate = () => {
 const emailValidate = () => {
 	if (emailForm.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(emailForm.value)) {
 		showError(emailForm, errorMessages.email);
+		return false;
 	} else {
 		hideError(emailForm);
 		return true;
@@ -78,6 +81,7 @@ const birthdateValidate = () => {
 		!/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdateForm.value)
 	) {
 		showError(birthdateForm, errorMessages.birthdate);
+		return false;
 	} else {
 		hideError(birthdateForm);
 		return true;
@@ -87,6 +91,7 @@ const birthdateValidate = () => {
 const quantityValidate = () => {
 	if (quantityTournamentForm.value == null || !/^[0-9]+$/.test(quantityTournamentForm.value)) {
 		showError(quantityTournamentForm, errorMessages.quantity);
+		return false;
 	} else {
 		hideError(quantityTournamentForm);
 		return true;
@@ -99,6 +104,7 @@ const locationValidate = () => {
 		return true;
 	} else {
 		showError(radioLocationsForm, errorMessages.location);
+		return false;
 	}
 };
 
@@ -108,6 +114,7 @@ const checkboxValidate = () => {
 		return true;
 	} else {
 		showError(checkboxConditionForm, errorMessages.checkbox);
+		return false;
 	}
 };
 
@@ -133,7 +140,7 @@ function validate(e) {
 		hideFormData();
 		modifySubmitButton();
 	} else {
-		console.log("form pas ok");
+		console.log("formulaire incorrect");
 	}
 }
 
