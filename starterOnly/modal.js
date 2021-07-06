@@ -74,6 +74,7 @@ const firstNameValidate = () => {
 		return true;
 	}
 };
+//Regex: accept letters from A to Z upper or lowercase, accept - and '
 
 const lastNameValidate = () => {
 	if (lastNameForm.value.length < 2 || lastNameForm.value == null || !/^[A-Za-z\-\']+$/.test(lastNameForm.value)) {
@@ -84,6 +85,7 @@ const lastNameValidate = () => {
 		return true;
 	}
 };
+//Regex: accept letters from A to Z upper or lowercase, accept - and '
 
 const emailValidate = () => {
 	if (emailForm.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(emailForm.value)) {
@@ -94,6 +96,7 @@ const emailValidate = () => {
 		return true;
 	}
 };
+//Regex: (one or more (+)(letters and digits 0 to 9 and _ - .)) @ (one or more (+)(letters and digits 0 to 9 and _ - .)) . (2 to 5 letters)
 
 const compareTime = () => {
 	const currentTime = new Date().getTime();
@@ -114,6 +117,7 @@ const birthdateValidate = () => {
 		return true;
 	}
 };
+//Regex: yyyy-mm-dd (19/20 + 2 digit)-(0 optionnal + 1 digit OR 1 + 1/2/3)-(0 + 1 digit OR 1/2 + 1 digit OR 3 + 0/1)
 
 const quantityValidate = () => {
 	if (quantityTournamentForm.value == null || !/^[0-9]+$/.test(quantityTournamentForm.value)) {
@@ -124,6 +128,7 @@ const quantityValidate = () => {
 		return true;
 	}
 };
+//Regex: accept one or more (+) digits [0-9]
 
 const locationValidate = () => {
 	if (document.querySelectorAll("input[name=location]:checked").length > 0) {
