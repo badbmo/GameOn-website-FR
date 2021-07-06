@@ -45,8 +45,9 @@ modalForm.addEventListener("submit", validate);
 
 // submit modal form
 
+/*
 const NameValidate = (nameForm, errorMessage) => {
-	if (nameForm.value.length < 2 || nameForm.value == null || !/^[A-Za-z]+$/.test(nameForm.value)) {
+	if (nameForm.value.length < 2 || nameForm.value == null || !/^[A-Za-z\-\']+$/.test(nameForm.value)) {
 		showError(nameForm, errorMessage);
 		return false;
 	} else {
@@ -56,13 +57,33 @@ const NameValidate = (nameForm, errorMessage) => {
 };
 
 const firstNameValidate = () =>{
-	NameValidate (lastNameForm, errorMessages.lastName);
-};
-
-const lastNameValidate = () =>{
 	NameValidate (firstNameForm, errorMessages.firstName);
 };
 
+const lastNameValidate = () =>{
+	NameValidate (lastNameForm, errorMessages.lastName);
+};
+*/
+
+const firstNameValidate = () => {
+	if (firstNameForm.value.length < 2 || firstNameForm.value == null || !/^[A-Za-z\-\']+$/.test(firstNameForm.value)) {
+		showError(firstNameForm, errorMessages.firstName);
+		return false;
+	} else {
+		hideError(firstNameForm);
+		return true;
+	}
+};
+
+const lastNameValidate = () => {
+	if (lastNameForm.value.length < 2 || lastNameForm.value == null || !/^[A-Za-z\-\']+$/.test(lastNameForm.value)) {
+		showError(lastNameForm, errorMessages.firstName);
+		return false;
+	} else {
+		hideError(lastNameForm);
+		return true;
+	}
+};
 
 const emailValidate = () => {
 	if (emailForm.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(emailForm.value)) {
@@ -74,10 +95,17 @@ const emailValidate = () => {
 	}
 };
 
+const compareTime = () => {
+	const currentTime = new Date().getTime();
+	const choosenTime = new Date(birthdateForm.value).getTime();
+	return currentTime > choosenTime;
+};
+
 const birthdateValidate = () => {
 	if (
 		birthdateForm.value == null ||
-		!/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdateForm.value)
+		!/^(19|20)\d{2}[-](0?[1-9]|1[012])[-](0[1-9]|[12]\d|3[01])$/.test(birthdateForm.value) ||
+		compareTime() == false
 	) {
 		showError(birthdateForm, errorMessages.birthdate);
 		return false;
