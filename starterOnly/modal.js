@@ -45,33 +45,21 @@ modalForm.addEventListener("submit", validate);
 
 // submit modal form
 
-/*
-const NameValidate = (nameForm, errorMessage) => {
-	if (nameForm.value.length < 2 || nameForm.value == null || !/^[A-Za-z\-\']+$/.test(nameForm.value)) {
-		showError(nameForm, errorMessage);
-		return false;
-	} else {
-		hideError(nameForm);
-		return true;
-	}
-};
-
-const firstNameValidate = () =>{
-	NameValidate (firstNameForm, errorMessages.firstName);
-};
-
-const lastNameValidate = () =>{
-	NameValidate (lastNameForm, errorMessages.lastName);
-};
-*/
+let firstNameValidated = false;
+let lastNameValidated = false;
+let emailValidated = false;
+let birthdateValidated = false;
+let quantityValidated = false;
+let locationValidated = false;
+let checkboxValidated = false;
 
 const firstNameValidate = () => {
 	if (firstNameForm.value.length < 2 || firstNameForm.value == null || !/^[A-Za-z\-\']+$/.test(firstNameForm.value)) {
 		showError(firstNameForm, errorMessages.firstName);
-		return false;
+		return firstNameValidated = false;
 	} else {
 		hideError(firstNameForm);
-		return true;
+		return firstNameValidated = true;
 	}
 };
 //Regex: accept letters from A to Z upper or lowercase, accept - and '
@@ -79,10 +67,10 @@ const firstNameValidate = () => {
 const lastNameValidate = () => {
 	if (lastNameForm.value.length < 2 || lastNameForm.value == null || !/^[A-Za-z\-\']+$/.test(lastNameForm.value)) {
 		showError(lastNameForm, errorMessages.firstName);
-		return false;
+		return lastNameValidated = false;
 	} else {
 		hideError(lastNameForm);
-		return true;
+		return lastNameValidated = true;
 	}
 };
 //Regex: accept letters from A to Z upper or lowercase, accept - and '
@@ -90,10 +78,10 @@ const lastNameValidate = () => {
 const emailValidate = () => {
 	if (emailForm.value == null || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(emailForm.value)) {
 		showError(emailForm, errorMessages.email);
-		return false;
+		return emailValidated = false;
 	} else {
 		hideError(emailForm);
-		return true;
+		return emailValidated = true;
 	}
 };
 //Regex: (one or more (+)(letters and digits 0 to 9 and _ - .)) @ (one or more (+)(letters and digits 0 to 9 and _ - .)) . (2 to 5 letters)
@@ -111,10 +99,10 @@ const birthdateValidate = () => {
 		compareTime() == false
 	) {
 		showError(birthdateForm, errorMessages.birthdate);
-		return false;
+		return birthdateValidated = false;
 	} else {
 		hideError(birthdateForm);
-		return true;
+		return birthdateValidated = true;
 	}
 };
 //Regex: yyyy-mm-dd (19/20 + 2 digit)-(0 optionnal + 1 digit OR 1 + 1/2/3)-(0 + 1 digit OR 1/2 + 1 digit OR 3 + 0/1)
@@ -122,10 +110,10 @@ const birthdateValidate = () => {
 const quantityValidate = () => {
 	if (quantityTournamentForm.value == null || !/^[0-9]+$/.test(quantityTournamentForm.value)) {
 		showError(quantityTournamentForm, errorMessages.quantity);
-		return false;
+		return quantityValidated = false;
 	} else {
 		hideError(quantityTournamentForm);
-		return true;
+		return quantityValidated = true;
 	}
 };
 //Regex: accept one or more (+) digits [0-9]
@@ -133,20 +121,20 @@ const quantityValidate = () => {
 const locationValidate = () => {
 	if (document.querySelectorAll("input[name=location]:checked").length > 0) {
 		hideError(radioLocationsForm);
-		return true;
+		return locationValidated = true;
 	} else {
 		showError(radioLocationsForm, errorMessages.location);
-		return false;
+		return locationValidated = false;
 	}
 };
 
 const checkboxValidate = () => {
 	if (checkboxConditionForm.checked == true) {
 		hideError(checkboxConditionForm);
-		return true;
+		return checkboxValidated = true;
 	} else {
 		showError(checkboxConditionForm, errorMessages.checkbox);
-		return false;
+		return checkboxValidated = false;
 	}
 };
 
@@ -160,13 +148,13 @@ function validate(e) {
 	locationValidate();
 	checkboxValidate();
 	if (
-		firstNameValidate() &&
-		lastNameValidate() &&
-		emailValidate() &&
-		birthdateValidate() &&
-		quantityValidate() &&
-		locationValidate() &&
-		checkboxValidate()
+		firstNameValidated == true &&
+		lastNameValidated == true &&
+		emailValidated == true &&
+		birthdateValidated == true &&
+		quantityValidated == true &&
+		locationValidated == true &&
+		checkboxValidated ==true
 	) {
 		showSuccessMessage();
 		hideFormData();
